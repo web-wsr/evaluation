@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src=" http://g.tbcdn.cn/mtb/lib-flexible/0.3.2/??flexible_css.js,flexible.js"></script> -->
+    <title>测评报告</title>
+</head>
+<style>
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    @media print {
+        .a4-page {
+            page-break-after: avoid;
+            /* 避免在此元素之后分页 */
+            page-break-inside: avoid;
+            /* 避免在此元素内部分页 */
+        }
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        /* height: 100vh; */
+        /* display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; */
+        margin: 0 auto;
+    }
+
+    .a4-page {
+        width: 900px;
+        aspect-ratio: 210 / 297;
+        /* width: 210mm;
+        height: 297mm; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .content-container {
+        position: relative;
+
+    }
+
+    .content-text-bar {
+        position: absolute;
+        left: 20px;
+        background: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/Emgpu11VvCuS9Gcu77lq3qQXypgTjPOROUdLPRq0.png') no-repeat;
+        height: 95%;
+        width: 50px;
+        background-size: cover;
+    }
+
+
+    .content-title {
+        position: absolute;
+        top: 10%;
+        right: 10%;
+        color: #494397;
+        font-size: 50px;
+        font-weight: bold;
+    }
+
+    .content-part-container {
+        position: absolute;
+        top: 24%;
+        left: 18%;
+    }
+
+
+    .content-part-list {
+        width: 100%;
+        height: 100%;
+        margin-bottom: 20px;
+    }
+
+    .content-part-title {
+        font-size: 35px;
+        color: #fff;
+        font-weight: 700;
+        background-color: #494397;
+    }
+
+    .content-part-item ul li {
+        font-size: 25px;
+        font-weight: 500;
+        color: #000000;
+        margin-top: 20px;
+    }
+
+    /* 温馨提示 */
+    .warm-prompt-continer {
+        width: 100%;
+    }
+
+    .warm-tip {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        position: relative;
+        font-size: 25px;
+        font-weight: bold;
+        margin-left: 50px;
+    }
+
+    .warm-tip::before {
+        position: absolute;
+        content: '';
+        width: 30px;
+        height: 30px;
+        top: 1px;
+        left: -38px;
+        background: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/yDHGyMWdyJN2WDLMMyZUJtvKpSRSNS1Tp6FfBkgr.png') no-repeat;
+        background-position: center;
+        background-size: 100%;
+
+    }
+
+    .wram-tip-text {
+        font-size: 20px;
+        font-weight: 500;
+        margin-top: 20px;
+    }
+
+    /* model 部分 */
+    .model-contianer {
+        width: 100%;
+        height: 100%;
+        background-color: #FEFBFC;
+        z-index: -2;
+    }
+
+    .model-title {
+        width: 280px;
+        height: 60px;
+        position: relative;
+        font-size: 35px;
+        font-weight: bold;
+        color: #fff;
+        text-align: left;
+        padding-left: 100px;
+        line-height: 60px;
+    }
+
+    .model-title::before,
+    .beliefs-title::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #494397;
+        border-top-left-radius: 30px;
+        /* 左上角圆角半径 */
+        border-bottom-left-radius: 30px;
+        z-index: -1;
+    }
+
+    .model-content {
+        margin: 0 40px;
+    }
+
+    .model-content-title {
+        margin: 20px 0;
+        font-size: 35px;
+        font-weight: bold;
+        color: #494397;
+    }
+
+    .model-list {
+        margin-left: 20px;
+    }
+
+    .model-list ul li {
+        font-size: 20px;
+        padding-bottom: 20px;
+    }
+
+    .circle-container {
+        width: 450px;
+        height: 450px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/VC0q4HHL7fi33wSHrqlB64X1ZkOHGpSLHBiFUUAU.png') no-repeat;
+        background-position: center;
+        background-size: auto;
+    }
+
+    /* theories 部分 */
+
+
+    /* .theories-content {
+        margin: 0 40px;
+    }
+
+    .theories-title {
+        width: 280px;
+        height: 60px;
+        position: relative;
+        font-size: 35px;
+        font-weight: bold;
+        color: #fff;
+        text-align: left;
+        padding-left: 60px;
+        line-height: 60px;
+    }
+
+    .theories-content-title {
+        margin: 20px 0;
+        font-size: 35px;
+        font-weight: bold;
+        color: #494397;
+    }
+
+    .theories-tree-container {
+        margin: 0 auto;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin-top: 60px;
+        background: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/1rHvjP0y5gDsZ37Re4RHKAjOola98gxsyDDtuSYq.png') no-repeat;
+        background-size: 550px 550px;
+        background-position: 50%;
+    }
+
+    .theories-tip-1,
+    .theories-tip-2,
+    .theories-tip-3,
+    .theories-tip-4,
+    .theories-tip-5 {
+        position: absolute;
+    }
+
+    .theories-tip-1 {
+        top: 8%;
+        left: 4%;
+    }
+
+    .theories-tip-2 {
+        left: 50%;
+        top: 2%;
+        transform: translate(-30%);
+    }
+
+    .theories-tip-3 {
+        top: 5%;
+        right: 2%;
+    }
+
+    .theories-tip-4 {
+        bottom: 25%;
+        right: 5%;
+    }
+
+    .theories-tip-5 {
+        bottom: 25%;
+        left: 10%;
+    } */
+
+    /* beliefs 部分 */
+    .beliefs-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .beliefs-content {
+        margin: 0 50px;
+    }
+
+    .beliefs-title {
+        display: inline-block;
+        height: 60px;
+        position: relative;
+        font-size: 35px;
+        font-weight: bold;
+        color: #fff;
+        text-align: left;
+        padding-left: 60px;
+        padding-right: 20px;
+        line-height: 60px;
+    }
+
+    .beliefs-content-title {
+        margin: 20px 0;
+        font-size: 35px;
+        font-weight: bold;
+        color: #494397;
+    }
+
+    .beliefs-content-des {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* align-items: center; */
+    }
+
+    .beliefs-content-des-tip {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 30px;
+        margin: 10px 0;
+    }
+
+    .beliefs-content-dexs-list {
+        width: 100%;
+        height: 60px;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-gap: 1px;
+        margin: 20px 0;
+    }
+
+    .beliefs-content-dexs-item {
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .beliefs-content-dexs-item:nth-child(-n+3) {
+        background-color: #494397;
+    }
+
+    .beliefs-content-dexs-item:nth-child(4),
+    .beliefs-content-dexs-item:nth-child(5) {
+        background-color: #97A0E2;
+    }
+
+    .beliefs-content-dexs-item:nth-last-child(-n+3) {
+        background-color: #BDCED8;
+    }
+
+    .beliefs-content-cricle-list {
+        width: 100%;
+        height: 60px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 45px;
+    }
+
+    .beliefs-content-cricle-item {
+        position: relative;
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 30px;
+        border: 2px solid #EBEBEB;
+    }
+
+    .beliefs-content-cricle-item::after {
+        content: '';
+        position: absolute;
+        right: -10px;
+        width: 40px;
+        height: 60px;
+        border-radius: 30px;
+        background-color: #494397;
+    }
+
+    .beliefs-content-cricle-item:nth-child(2)::after {
+        background-color: #97A0E2;
+    }
+
+    .beliefs-content-cricle-item:nth-child(3)::after {
+        background-color: #BDCED8;
+    }
+
+    .beliefs-content-part {
+        width: 100%;
+        margin-top: 40px;
+    }
+
+    .beliefs-content-part-title {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .beliefs-content-part-title-num {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        background-color: #494397;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .beliefs-content-part-title-text {
+        margin-left: 10px;
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .beliefs-content-part-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .beliefs-content-part-item {
+        position: relative;
+        width: 100%;
+        padding: 20px 10px 20px 35px;
+        margin-top: 25px;
+        font-weight: 500;
+        font-size: 18px;
+        /* letter-spacing: 1px; */
+        line-height: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #D5D9F3;
+    }
+
+    /* part-item-text 文字信息 */
+    .part-item-text {
+        letter-spacing: 1px;
+    }
+
+    .beliefs-content-part-item::before {
+        content: '';
+        width: 15px;
+        height: 100%;
+        position: absolute;
+        background-color: #494397;
+        top: 0;
+        left: 0;
+    }
+
+    .beliefs-content-part-title-tip {
+        position: relative;
+        font-size: 18px;
+        font-weight: 500;
+        margin-left: 40px;
+
+    }
+
+    .beliefs-content-part-title-tip::before {
+        width: 30px;
+        height: 30px;
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -40px;
+        background: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/0nJhb0pWrekDKwK6iHjwPOt6XfDEWJNVdMgVX3C7.png') no-repeat;
+        background-position: center;
+        background-size: 100%;
+    }
+
+    .beliefs-content-action {
+        margin-top: 20px;
+        margin-left: 10px;
+    }
+
+    .beliefs-content-action-title {
+        font-size: 18px;
+    }
+
+    .beliefs-content-action ul {
+        margin-top: 20px;
+        padding-left: 20px;
+
+    }
+
+    .beliefs-content-action ul li {
+        font-size: 18px;
+        letter-spacing: 1px;
+        font-weight: 500;
+        margin-bottom: 20px;
+
+    }
+
+    .beliefs-content-subtitle {
+        letter-spacing: 1px;
+        line-height: 30px;
+        font-size: 18px;
+        font-weight: 500;
+        margin-top: 20px;
+    }
+
+    /* interaction 部分 */
+    .interaction-title {
+        padding-left: 25px;
+    }
+
+    .interaction-content-dexs-list {
+        width: 100%;
+        height: 50px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 3px;
+        margin: 20px 0;
+        padding: 0 15px;
+    }
+
+    .interaction-content-dexs-item {
+        text-align: center;
+        line-height: 50px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .interaction-content-dexs-item:nth-child(1) {
+        background-color: #494397;
+    }
+
+    .interaction-content-dexs-item:nth-child(2) {
+        background-color: #616DBC;
+    }
+
+    .interaction-content-dexs-item:nth-child(3) {
+        background-color: #7B75CC;
+    }
+
+    .interaction-content-dexs-item:nth-child(4) {
+        background-color: #97A0E2;
+    }
+
+    .interaction-content-dexs-item:nth-child(5) {
+        background-color: #BDBCFF;
+    }
+
+    .interaction-content-part-subtitle {
+        margin: 20px 0;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .interaction-title-tip-blind::before {
+        width: 30px;
+        height: 30px;
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -40px;
+        background: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/yDHGyMWdyJN2WDLMMyZUJtvKpSRSNS1Tp6FfBkgr.png') no-repeat;
+        background-position: center;
+        background-size: 100%;
+    }
+
+    /* disposition 部分 */
+    .beliefs-disposition-ball {
+        position: relative;
+        width: 60%;
+        height: 450px;
+        /* background: url('./img/dispositionBall.png') no-repeat;
+        background-size: 100%; */
+        background-position: center;
+    }
+
+    /* 情绪球 */
+    .disposition-ball-item {
+        position: absolute;
+        display: inline-block;
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .beliefs-disposition-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* .disposition-ball-item {
+        display: inline-block;
+        position: absolute;
+        font-size: 25px;
+        font-weight: bold;
+
+    } */
+
+    /* .disposition-ball-item:nth-child(1) {
+        top: 42%;
+        left: 9%;
+        color: #fff;
+    }
+
+    .disposition-ball-item:nth-child(5) {
+        top: 42%;
+        right: 9%;
+    }
+
+    .disposition-ball-item:nth-child(2) {
+        top: 20%;
+        left: 23%;
+    }
+
+    .disposition-ball-item:nth-child(4) {
+        top: 20%;
+        right: 24%;
+    }
+
+    .disposition-ball-item:nth-child(3) {
+        top: 9%;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .disposition-ball-item:nth-child(7) {
+        bottom: 18%;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .disposition-ball-item:nth-child(6) {
+        bottom: 30%;
+        right: 24%;
+    }
+
+    .disposition-ball-item:nth-child(8) {
+        bottom: 30%;
+        left: 23%;
+    } */
+
+    .beliefs-disposition-ranking-title {
+        display: inline-block;
+        font-size: 18px;
+        font-weight: 700;
+        padding: 10px 40px;
+        border: 2px solid #EBEBEB;
+        border-radius: 30px;
+    }
+
+    .beliefs-disposition-ranking-list {
+        width: 100%;
+        margin-top: 30px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 60px;
+        padding: 0 50px;
+    }
+
+    .disposition-ranking-item-title {
+        display: inline-block;
+        margin-bottom: 10px;
+        position: relative;
+        text-align: left;
+        line-height: 50px;
+        font-size: 18px;
+        padding-left: 15px;
+        padding-right: 50px;
+        font-weight: bold;
+        border-radius: 30px;
+        border: 2px solid #EBEBEB;
+    }
+
+    .disposition-ranking-item-title::after {
+        content: '预见风险';
+        position: absolute;
+        text-align: center;
+        line-height: 50px;
+        right: -80px;
+        width: 120px;
+        height: 50px;
+        border-radius: 30px;
+        background-color: #97A0E2;
+    }
+
+    .ranking-item-title-anger::after {
+        content: '捍卫正义';
+        color: #fff;
+        background-color: #C00000;
+    }
+
+    .disposition-ranking-item-des {
+        margin-left: 15px;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        line-height: 30px;
+    }
+
+    .ranking-item-title-happy::after {
+        content: "发现美好";
+        background-color: #FFD700;
+    }
+
+    .ranking-item-title-sad::after {
+        content: "深刻共情";
+        background-color: #2394D9;
+    }
+
+    .ranking-item-title-advance::after {
+        content: "激发潜力";
+        background-color: #F1AAC8;
+    }
+
+    .ranking-item-title-hate::after {
+        content: "清晰选择";
+        background-color: #16CDBF;
+    }
+
+    .ranking-item-title-surprise::after {
+        content: "灵活应变";
+        background-color: #FB9C4C;
+    }
+
+    .ranking-item-title-trust::after {
+        content: "信任可靠";
+        background-color: #85C6DA;
+    }
+
+    /* emotion部分 */
+    .emotion-content-title {
+        margin: 0;
+    }
+
+    /* personality 部分 */
+    .beliefs-content-result {
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+    }
+
+    .ranking-item-title-result {
+        display: inline-block;
+        margin-right: 240px;
+        position: relative;
+        text-align: left;
+        line-height: 50px;
+        font-size: 18px;
+        padding-left: 15px;
+        padding-right: 50px;
+        font-weight: bold;
+        border-radius: 30px;
+        border: 2px solid #EBEBEB;
+        margin-bottom: 0;
+    }
+
+    .ranking-item-title-result::after {
+        content: "沉静思考";
+        background-color: #494397;
+        color: #fff;
+        position: absolute;
+        text-align: center;
+        line-height: 50px;
+        right: -80px;
+        width: 120px;
+        height: 50px;
+        border-radius: 30px;
+    }
+
+    .personality-perference-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .perferenc-keyword-item {
+        position: relative;
+        display: inline-block;
+        font-size: 20px;
+        font-weight: 700;
+        color: #494397;
+        margin-right: 20px;
+    }
+
+    .perferenc-keyword-item::after {
+        content: " ";
+        position: absolute;
+        width: 2px;
+        height: 20px;
+        top: 50%;
+        right: -10px;
+        transform: translate(0, -50%);
+        background-color: #494397;
+    }
+
+    .perferenc-keyword-item:nth-last-child(1)::after {
+        display: none;
+    }
+
+    .beliefs-content-personality-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 50px;
+    }
+
+    .beliefs-content-personality-list .border-des {
+        border-top: 2px solid #494397;
+        padding: 10px 0;
+    }
+
+    .beliefs-content-personality-item {
+        border-right: 1px solid #BDCED8;
+        height: 90px;
+        display: flex;
+        align-items: center;
+    }
+
+    .personality-item-opposite {
+        border-right: none;
+        border-left: 1px solid #BDCED8;
+    }
+
+    .personality-item-opposite .personality-item-head::after {
+        border-bottom: 38px solid #494397;
+    }
+
+    .personality-item-title {
+        font-size: 20px;
+        text-align: right;
+        color: #7F7F7F;
+    }
+
+    .personality-item-title-opposite {
+        text-align: left;
+        color: #494397;
+    }
+
+    .personality-item-des {
+        font-size: 18px;
+        padding-left: 20px;
+        text-align: right;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        color: #7F7F7F;
+    }
+
+    .personality-item-des-opposite {
+        text-align: left;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        padding-left: 0;
+        color: #494397;
+    }
+
+    .personality-item-head {
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 100%;
+        color: #fff;
+        margin: 0 20px;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .personality-item-head::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -70%);
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        /* 底边一半的宽度 */
+        border-right: 15px solid transparent;
+        /* 底边一半的宽度 */
+        border-bottom: 38px solid #7F7F7F;
+        /* 三角形的高度 */
+        z-index: -1;
+    }
+
+    .personality-item-action {
+        margin-top: 50px;
+    }
+
+    /* 变色bar部分 */
+    .personality-content-part-subtitle {
+        margin: 20px 0;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 50px;
+    }
+
+    .personality-test-bar {
+        width: 100%;
+        height: 60px;
+        position: relative;
+        margin-left: 15px;
+        /* background: url('./img/bar.png') no-repeat;
+        background-position: center;
+        background-size: auto; */
+    }
+
+    .personality-test-bar img {
+        width: 95%;
+        height: 100%;
+    }
+
+    /* 指示箭头 */
+    .arrow-contianer {
+        position: absolute;
+        bottom: 0;
+        transform: translate(0, 50%);
+        width: 20px;
+        height: 25px;
+        background: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/0FxcyQTAx9xj72FquBPSOeFtHlO4Nfa0Gg2tD0d5.png') no-repeat;
+        background-size: 100% 100%;
+    }
+
+    /* .personality-test-bar::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 170px;
+        transform: translate(0, 50%);
+        width: 20px;
+        height: 25px;
+        background: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/0FxcyQTAx9xj72FquBPSOeFtHlO4Nfa0Gg2tD0d5.png') no-repeat;
+        background-size: 100% 100%;
+    } */
+
+    .personality-test-des {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .personality-test-des-item {
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .personality-test-des-title {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .personality-test-des-content {
+        font-size: 16px;
+    }
+</style>
+
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <div class="a4-page">
+            <img src="https://assets.jiker.com/_for_common_project/2025/0113/admin/vEXs4x2JFmRTFmWUoeyvK1b9pVS2GYe70pTNUdeD.png"
+                style="width: 100%; height: auto;" alt="封面"></img>
+        </div>
+        <div class="a4-page content-container">
+            <div class="content-text-bar"></div>
+            <div class="content-title">报告目录</div>
+            <div class="content-part-container">
+                <div class="content-part-list">
+                    <div class="content-part-title">A: &nbsp测评目录</div>
+                    <div class="content-part-item" style="margin-left: 60px;">
+                        <ul>
+                            <li>评估模型</li>
+                            <li>理论基础</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-part-list">
+                    <div class="content-part-title">B: &nbsp报告解析</div>
+                    <div class="content-part-item" style="margin-left: 60px;">
+                        <ul>
+                            <li>养育信念</li>
+                            <li>亲子互动</li>
+                            <li>情绪气质</li>
+                            <li>情绪模式</li>
+                            <li>个性特质</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="content-part-list">
+                    <div class="content-part-title">C: &nbsp学习资料</div>
+                </div> -->
+            </div>
+        </div>
+        <div class="a4-page">
+            <img src="https://assets.jiker.com/_for_common_project/2025/0113/admin/7Nq44TyxRWNe2PvBKheS4jHEp18eAZtzTbcwulQ3.png"
+                style="width: 100%; height: auto;"></img>
+        </div>
+        <div class="a4-page">
+            <div class="warm-prompt-continer">
+                <div class="warm-tip">
+                    温馨提示：
+                </div>
+                <ul class="wram-tip-list" style="margin-left: 40px;">
+                    <li class="wram-tip-text">我们注意到，您有一些题目未能完全按照提示选择特定答案。</li>
+                    <li class="wram-tip-text">这种情况可能是因为您在填答过程中感到疲劳，或者您对题目的理解与所设定的标准略有不同。</li>
+                    <li class="wram-tip-text">测评结果的精确性，很大程度依赖于您的有效回答。</li>
+                    <li class="wram-tip-text">当您考虑测评结果对您的适合程度时，请留意这一点。</li>
+                </ul>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="model-contianer">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="model-title">MODEL</div>
+                </div>
+                <div class="model-content">
+                    <div class="model-content-title">测评模型</div>
+                    <div style="font-size: 20px; font-weight: 500; line-height: 30px;">您的养育模式是独一无二的。了解您在核心养育情境中的独特特质表现，
+                        理解您与众不同的养育优势。</div>
+                    <div style="margin: 20px 0; font-size: 20px; font-weight: 500; line-height: 30px;">
+                        本测评模型，涵盖以下5个与养育相关的核心情境。</div>
+                    <div class="model-list">
+                        <ul>
+                            <li><strong>养育信念</strong>: 家长在养育情境中的核心理念与稳定态度。</li>
+                            <li><strong>亲子互动</strong>: 家长与孩子通过行为和交流形成动态关系。</li>
+                            <li><strong>情绪气质</strong>: 个体惯常的情绪状态和态度。</li>
+                            <li><strong>情绪模式</strong>: 家长在养育情境中与情绪相关的典型模式。</li>
+                            <li><strong>个性特质</strong>: 个体在特定环境下的气质特征与个性化倾向。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="circle-container"></div>
+            </div>
+
+        </div>
+        <div class="a4-page">
+            <img src="https://assets.jiker.com/_for_common_project/2025/0115/admin/oH6LS6aTH9552ek7mer2RFd2wHwaYrHx8p8U1U0q.png"
+                alt="" style="width: 100%; height: auto;">
+        </div>
+        <div class="a4-page">
+            <img src="https://assets.jiker.com/_for_common_project/2025/0113/admin/JhrnLpSW1LppcPD4hTu12MhdkOArQbw6e0Fz6zPX.png"
+                style="width: 100%; height: auto;" alt="">
+        </div>
+        <!-- beliefs 总体 -->
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title">BELIEFS</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">养育信念</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-des-tip">
+                            <strong>养育信念</strong>，反映了您<strong>内心深处的价值取向</strong>，是您您养育的深层驱动力，它以潜移默化的方式引导着您在日常养育情境中的选择和行为。
+                        </div>
+                        <div class="beliefs-content-des-tip">
+                            不同信念之间没有对错或优劣，共同构成了您独特的养育模式。测评结果展示了您当前最关注的几个养育方向，同时也揭示了一些潜在领域。
+                        </div>
+                        <div class="beliefs-content-dexs-list">
+                            <div class="beliefs-content-dexs-item">独立</div>
+                            <div class="beliefs-content-dexs-item">幸福</div>
+                            <div class="beliefs-content-dexs-item">责任</div>
+                            <div class="beliefs-content-dexs-item">成就</div>
+                            <div class="beliefs-content-dexs-item">好奇</div>
+                            <div class="beliefs-content-dexs-item">坚韧</div>
+                            <div class="beliefs-content-dexs-item">自由</div>
+                            <div class="beliefs-content-dexs-item">安稳</div>
+                        </div>
+                        <div class="beliefs-content-cricle-list">
+                            <div class="beliefs-content-cricle-item">核心养育信念</div>
+                            <div class="beliefs-content-cricle-item">关注养育信念</div>
+                            <div class="beliefs-content-cricle-item">潜在养育信念</div>
+                        </div>
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">I</div>
+                                <div class="beliefs-content-part-title-text">核心养育信念: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">独立</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">
+                                        作为家长，您希望孩子能够自我决策，并通过独立行动来承担责任，实现自我管理与成长。</div>
+                                    <div class="part-item-text">您相信，孩子只有通过自主探索和实践，才能真正成长为独立的个体。</div>
+                                </div>
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">
+                                        这一信念可能促使您在无意识中为孩子提供更多的选择权和自由空间。这种方式不仅帮助孩子成长，还反映了您对孩子能力的信任。
+                                    </div>
+                                    <div class="part-item-text">当然，这并不妨碍您通过适度指导帮助孩子发展解决问题的能力。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title">BELIEFS</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">养育信念</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥潜能</div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">
+                                        &nbsp;“独立”的信念，将帮助孩子从小培养自我决策的能力，建立健康的自我意识。这种独立性将为他们的未来提供重要的心理资源。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <div class="beliefs-content-action-title">信念的内化行动：</div>
+                            <ul>
+                                <li><strong>反思</strong>: 在日常生活中，您对孩子独立性的支持是否与孩子的年龄和力相匹配？</li>
+                                <li><strong>实践</strong>: 尝试记录一个具体情境，观察您的独立信念是如何影响养育行为的，例如：在孩子做决定时，您倾向提供多少指导？</li>
+                                <li><strong>强化</strong>: 与孩子讨论他们的独立性目标，例如“完成一项自己独立制定的小计划”。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title">BELIEFS</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">养育信念</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">2</div>
+                                <div class="beliefs-content-part-title-text">核心养育信念: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">幸福</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">
+                                        作为家长，您希望孩子在生活中保持情绪的满足感和内心的稳定，认为幸福是成长的重要目标。幸福，是您对孩子成长环境的核心追求。
+                                    </div>
+                                </div>
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">这一信念可能促使您优先保障为孩子创造愉悦的互动体验，以帮助孩子感受到情感的满足和被爱。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥潜能</div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">
+                                        &nbsp;“幸福”的信念，有助于保障孩子能在情绪稳定的环境中发展心理弹自我意识。性和积极的人际关系，帮助他们建立对生活的热情与信心。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <div class="beliefs-content-action-title">信念的内化行动：</div>
+                            <ul>
+                                <li><strong>反思</strong>: 在孩子情绪波动时，您的支持方式是否有效传递了关怀与理解？</li>
+                                <li><strong>实践</strong>: 记录一次与孩子情感互动的具体情境（如谈论开心与烦恼的对话），回顾您在这一情境中如何表现出对幸福信念的重视。</li>
+                                <li><strong>强化</strong>: 与孩子分享您的情感体验，帮助他们学会表达幸福感来源。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title">BELIEFS</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">养育信念</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">3</div>
+                                <div class="beliefs-content-part-title-text">核心养育信念: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">责任</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">
+                                        作为家长，您希望孩子能够认识到自身在家庭、社会中的角色和责任，培养孩子对家庭和社会的责任意识。
+                                    </div>
+                                    <div class="part-item-text">您相信孩子只有学会承担责任，才能真正成长为有担当的人。</div>
+                                </div>
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">这一信念可能促使您惯性、持续地向孩子传递和不断强化责任感的重要性。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥潜能</div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">&nbsp;“责任”的信念，有助于引导孩子建立良好的道德感与社会适应能力，增强自身价值感。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <div class="beliefs-content-action-title">信念的内化行动：</div>
+                            <ul>
+                                <li><strong>反思</strong>: 在培养责任意识时，您的规则设定、强化方式是否与孩子的年龄和能力相匹配？</li>
+                                <li><strong>实践</strong>: 观察一次孩子完成任务的过程，记录您是如何强调责任感的。</li>
+                                <li><strong>强化</strong>: 在孩子承担责任后，讨论完成任务的感受，帮助巩固责任感。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title">BELIEFS</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">养育信念</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">4</div>
+                                <div class="beliefs-content-part-title-text">核心养育信念: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">成就</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">这一信念，可能体现在您希望孩子通过努力获得外在认可（如学业或职业成功）或实现个人目标，体现自身价值。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥潜能</div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">促进孩子发展出强烈的目标感和内在动机，为他们未来的成功奠定心理基础。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <div class="beliefs-content-action-title" style="font-weight: 700;">关于信念的反思：</div>
+                            <ul>
+                                <li><strong>反思</strong>: 回顾您与孩子互动的过程，您是否感受到&nbsp;<span
+                                        class="reflect-key">"成就"</span>&nbsp;信念的影响？它是否在某些情境中对孩子产生了积极作用？
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title">BELIEFS</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">养育信念</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">5</div>
+                                <div class="beliefs-content-part-title-text">核心养育信念: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">好奇</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">这一信念，可能体现在您希望孩子保持对未知的兴趣和探索欲望，相信好奇心是学习和成长的动力来源。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥潜能</div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">促进孩子培养终身学习的态度，保持对新事物的热情，并在探索中建立创造力和问题解决能力。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <div class="beliefs-content-action-title" style="font-weight: 700;">关于信念的反思：</div>
+                            <ul>
+                                <li><strong>反思</strong>: 回顾您与孩子互动的过程，您是否感受到&nbsp;<span
+                                        class="reflect-key">"好奇"</span>&nbsp;
+                                    信念的影响？它是否在某些情境中对孩子产生了积极作用？</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title">BELIEFS</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">养育信念</div>
+                    <div class="beliefs-content-subtitle">
+                        以下几项信念在您的养育中体现得相对不强，但它们仍然是您潜在的心理资源。通过适当的场景激活，这些信念可以为孩子提供独特的成长支持。</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part" style="margin-top: 25px;">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">6</div>
+                                <div class="beliefs-content-part-title-text">潜在养育信念: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">坚韧</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item" style="margin-top: 15px;">
+                                    <div class="part-item-text">这一信念，可能体现在您希望孩子面对挑战和挫折时，具备坚持下去和克服困难的抗压能力和心理韧性。</div>
+                                    <div class="part-item-text">孩子能够建立面对逆境的心理适应力，增强在不确定环境中的表现力。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-part" style="margin-top: 25px;">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">7</div>
+                                <div class="beliefs-content-part-title-text">潜在养育信念: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">自由</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item" style="margin-top: 15px;">
+                                    <div class="part-item-text">这一信念，可能体现在您相信孩子在开放、灵活的环境中成长更有潜力，减少限制以让孩子拥有更多探索和选择的机会。
+                                    </div>
+                                    <div class="part-item-text">孩子能够通过自由选择的机会，培养自我表达和独立决策能力，更好适应多变的未来环境。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-part" style="margin-top: 25px;">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">8</div>
+                                <div class="beliefs-content-part-title-text">潜在养育信念: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">安稳</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item" style="margin-top: 15px;">
+                                    <div class="part-item-text"> 这一信念，可能体现在您希望孩子拥有稳定的生活，减少风险和不确定性。</div>
+                                    <div class="part-item-text">孩子在安稳的成长环境中，能更好地发展情绪稳定性，并建立对周围世界的信任感。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- interaction 部分 -->
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container interaction-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title interaction-title">INTERACTION</div>
+                </div>
+                <div class="beliefs-content interaction-content">
+                    <div class="beliefs-content-title">互动关系</div>
+                    <div class="interaction-content-des">
+                        <div class="beliefs-content-des-tip interaction-content-des-tip">
+                            了解您在亲子互动过程中的稳定特质，它们反映出您的<strong>养育互动风格。</strong>
+                        </div>
+                        <div class="beliefs-content-des-tip">
+                            不同特质之间没有对错或优劣。测评结果展示了您在亲子互动中的重点关注维度，同时也揭示了一些潜在方向。阅读不同特质的文字内容，了解它们在您和孩子的互动过程中如何发挥作用。
+                        </div>
+                        <div class="interaction-content-dexs-list">
+                            <div class="interaction-content-dexs-item">联结</div>
+                            <div class="interaction-content-dexs-item">包容</div>
+                            <div class="interaction-content-dexs-item">秩序</div>
+                            <div class="interaction-content-dexs-item">适应</div>
+                            <div class="interaction-content-dexs-item">自主激励</div>
+                        </div>
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">I</div>
+                                <div class="beliefs-content-part-title-text">核心养育信念: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">联结</span></div>
+                            </div>
+                            <div class="interaction-content-part-subtitle">
+                                在亲子互动过程中，您首要关注的是关系的&nbsp;<strong>“亲密感”</strong>&nbsp;。
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">您倾向于通过真诚的情感交流和深度互动，拉近亲子距离，与孩子建立持久的情感纽带。</div>
+                                </div>
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">大多数时候，您愿意花时间与孩子相处，关注孩子的情绪体验，在亲子互动中保持细致观察和主动回应。</div>
+                                </div>
+                                <div class="interaction-content-part-subtitle">
+                                    &nbsp;“联结”&nbsp;特质，对您和孩子的亲子关系的助益
+                                </div>
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">您的特质，能够帮助您强化亲子关系的情感基础，使孩子感受到被关爱和被信任，提升亲子关系的安全感。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container interaction-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title interaction-title">INTERACTION</div>
+                </div>
+                <div class="beliefs-content interaction-content">
+                    <div class="beliefs-content-title">互动关系</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥&nbsp;<span
+                                        class="interaction-title-tip-key">“联结”</span>&nbsp;特质的潜能</div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">帮助孩子发展稳固的情感连接能力，提升孩子对社会关系的信任感和归属感。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <ul>
+                                <li>主动创造高质量的亲子互动时间。</li>
+                                <li>用真诚的倾听与反馈建立情感共鸣，不急于给出方案，适时表达对孩子的认可和支持。</li>
+                                <li>小动作表达关怀、主动记住孩子的重要时刻等方式，在日常生活中传递稳定的情感支持。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip interaction-title-tip-blind">留意盲点</div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <ul>
+                                <li>您对亲密互动的专注，可能会模糊亲子关系中的角色分工。试着在互动中明确责任，让亲子关系保持健康的边界感。</li>
+                                <li>您希望通过频繁而深入的互动给予孩子情感支持。您需要意识到，孩子同样需要独立决策和探索的机会。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container interaction-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title interaction-title">INTERACTION</div>
+                </div>
+                <div class="beliefs-content interaction-content">
+                    <div class="beliefs-content-title">互动关系</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">2</div>
+                                <div class="beliefs-content-part-title-text">突出特质: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">包容</span></div>
+                            </div>
+                            <div class="interaction-content-part-subtitle">
+                                在亲子互动过程中，您同样注重关系中&nbsp;<strong>“开放和宽容性”</strong>&nbsp;。
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">您倾向于在互动中自然接纳孩子的个性与多样化表现，与孩子保持开放关系与和谐互动。</div>
+                                </div>
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">
+                                        大多数时候，您更愿意接受孩子的独特性。对于孩子的“非典型”行为和差异性需求，您更愿意通过支持性交流，鼓励孩子表达自我，而非纠正或评判。</div>
+                                </div>
+                                <div class="interaction-content-part-subtitle">
+                                    &nbsp;“包容”&nbsp;特质，对您和孩子的亲子关系的助益
+                                </div>
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">您的特质，能够为孩子创造自由、安全的表达空间，建立一种平等的关系模式。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container interaction-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title interaction-title">INTERACTION</div>
+                </div>
+                <div class="beliefs-content interaction-content">
+                    <div class="beliefs-content-title">互动关系</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥&nbsp;<span
+                                        class="interaction-title-tip-key">“包容”</span>&nbsp;特质的潜能</div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">激发孩子的自尊感和个性化成长，增强其适应多样化社会环境的能力。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <ul>
+                                <li>鼓励孩子自由表达，使用开放式提问支持他们探索自己的情绪和想法。</li>
+                                <li>用具体的正向语言强化孩子的独特性，同时避免与他人比较。</li>
+                                <li>面对错误时注重成长，将关注点放在学习和改进上，和孩子一起探讨原因，并鼓励他们提出解决方法。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip interaction-title-tip-blind">留意盲点</div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <ul>
+                                <li>您对孩子情绪和行为的高度接纳，可能带来行为规范的缺失。试着设立清晰的规则，帮助孩子建立必要的规则意识。</li>
+                                <li>您可能会因为宽容的态度而错失帮助孩子成长的机会。尝试适时引导孩子关注结果，帮助孩子理解责任的重要性。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container interaction-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title interaction-title">INTERACTION</div>
+                </div>
+                <div class="beliefs-content interaction-content">
+                    <div class="beliefs-content-title">互动关系</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">3</div>
+                                <div class="beliefs-content-part-title-text">突出特质: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">秩序</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">在一定程度上，您希望通过一致性和稳定性，在亲子互动中建立和维持清晰的规则和行为边界。</div>
+                                    <div class="part-item-text">规则可预测性，有助于提升亲子关系的安全感和稳定性。</div>
+                                </div>
+                            </div>
+                            <div class="beliefs-content-part-title" style="margin-top: 30px;">
+                                <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥&nbsp;<span
+                                        class="interaction-title-tip-key">“包容”</span>&nbsp;特质的潜能</div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">帮助孩子理解规范的重要性，增强其对环境的掌控感，有助于培养自律性和规则意识。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <ul>
+                                <li>与孩子共同制定规则，使用可视化工具帮助他们遵守规则。</li>
+                                <li>尽量保持对规则的统一执行，并在规则范围内给孩子选择的自由。</li>
+                                <li>用秩序感缓解孩子的焦虑。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip interaction-title-tip-blind">留意盲点</div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <ul>
+                                <li>您对孩子情绪和行为的高度接纳，可能带来行为规范的缺失。试着设立清晰的规则，帮助孩子建立必要的规则意识。</li>
+                                <li>您可能会因为宽容的态度而错失帮助孩子成长的机会。尝试适时引导孩子关注结果，帮助孩子理解责任的重要性。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title interaction-title">INTERACTION</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">互动关系</div>
+                    <div class="beliefs-content-subtitle">
+                        以下特质在您的亲子互动当中，表现得并不明显。这不一定会对您的亲子关系造成负面影响，只是在您和孩子互动时，比较少被您主动关注和采取行动。</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part" style="margin-top: 55px;">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">4</div>
+                                <div class="beliefs-content-part-title-text"> <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">适应</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item" style="margin-top: 15px;">
+                                    <div class="part-item-text">&nbsp;“适应”特质突出的家长，倾向于灵活应对孩子需求和变化，不拘泥于单一方式。</div>
+                                    <div class="part-item-text">平衡规则与情感需求，能够增强亲子关系的灵活性和弹性。</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-part" style="margin-top: 55px;">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">5</div>
+                                <div class="beliefs-content-part-title-text"><span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">自主激励</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item" style="margin-top: 15px;">
+                                    <div class="part-item-text">
+                                        &nbsp;“自主激励”特质突出的家长，倾向于鼓励孩子的好奇心和独立性，给予孩子更多自主选择权，支持其发展新兴趣和能力。
+                                    </div>
+                                    <div class="part-item-text">尊重、赋能和鼓励，促进建立一种积极的互动关系。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- disposition 部分 -->
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title interaction-title">DISPOSITION</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">情绪气质</div>
+                    <div class="beliefs-content-subtitle"><span
+                            style="color: #494397;">情绪气质，</span>您在面对不同情境时展现的情绪特质，体现一个人惯常的情绪状态和态度。</div>
+                    <div class="beliefs-content-subtitle">测评结果呈现了您在8种基本情绪上的特质分布。它们共同构成了您在养育过程中的情绪基础，影响您对孩子的情绪表达、引导和支持方式。
+                    </div>
+                </div>
+                <div class="beliefs-disposition-container">
+                    <div class="beliefs-disposition-ball" id="disposition-ball-list">
+                        <div class="disposition-ball-item"
+                            style=" top: 38%; left: 1%; width: 84px; height: 84px; line-height: 84px; background-image: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/prWXzXAUgtbLKMpEi5SGxmyMKPNb3mexlZNKuarS.png');">
+                            愤怒</div>
+                        <div class="disposition-ball-item"
+                            style=" top: 20%; left: 20%; width: 70px; height: 70px; line-height: 70px; background-image: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/OaHdKtLADwukIBdCuZFXQ7WO9A6UMFBGNO1hgDGM.png');">
+                            信任</div>
+                        <div class="disposition-ball-item"
+                            style=" top: 5%; left: 45%; width: 70px; height: 70px; line-height: 70px; background-image: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/qWYGyjYE53dtijuww77vaYSo6e6eTn19vtmjC2Di.png');">
+                            快乐</div>
+                        <div class="disposition-ball-item"
+                            style=" top: 20%; left: 70%; width: 70px; height: 70px; line-height: 70px; background-image: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/xI2w1D117Prvg47eFxTJIuGxYZZDP7OloBgSwCjH.png');">
+                            期待</div>
+                        <div class="disposition-ball-item"
+                            style=" top: 40%; left: 85%; width: 70px; height: 70px; line-height: 70px; background-image: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/yHTe2tzkp0X5eRkInDSwEZFKQjMwKI1o2mnp8U0K.png');">
+                            惊讶</div>
+                        <div class="disposition-ball-item"
+                            style=" bottom: 30%; left: 65%; width: 70px; height: 70px; line-height: 70px; background-image: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/lXv7UBAgpWhHGrv0JNjFGAxeldxP4ED0tmQwsMue.png');">
+                            悲伤</div>
+                        <div class="disposition-ball-item"
+                            style=" bottom: 15%; left: 43%; width: 98px; height: 98px; line-height: 98px; background-image: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/lXv7UBAgpWhHGrv0JNjFGAxeldxP4ED0tmQwsMue.png');">
+                            恐惧</div>
+                        <div class="disposition-ball-item"
+                            style=" bottom: 30%; left: 25%; width: 70px; height: 70px; line-height: 70px; background-image: url('https://assets.jiker.com/_for_common_project/2025/0113/admin/UONffCShlO8OjcjElSsSZEG40lWjYUXQnsWfWy57.png');">
+                            厌恶</div>
+                    </div>
+                    <div class="beliefs-disposition-ranking-title">
+                        排名前两位的基本情绪
+                    </div>
+                    <div class="beliefs-disposition-ranking-list">
+                        <div class="beliefs-disposition-ranking-item">
+                            <div class="disposition-ranking-item-title">恐惧</div>
+                            <div class="disposition-ranking-item-des">在复杂情境中展现谨慎思考，能够提前识别潜在风险并采取保护措施，为孩子创造安全的成长环境。</div>
+                        </div>
+                        <div class="beliefs-disposition-ranking-item">
+                            <div class="disposition-ranking-item-title ranking-item-title-anger">愤怒</div>
+                            <div class="disposition-ranking-item-des">
+                                对不公平或不合理现象敏感，具有捍卫原则、维护秩序、推动家庭改变的积极驱动力，能够帮助孩子建立清晰的规则意识。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title interaction-title">DISPOSITION</div>
+                </div>
+                <div class="beliefs-content">
+                    <div class="beliefs-content-title">情绪气质</div>
+                </div>
+                <div class="beliefs-disposition-container">
+                    <div class="beliefs-disposition-ranking-title">
+                        关于其他基本情绪的描述
+                    </div>
+                    <div class="beliefs-disposition-ranking-list">
+                        <div class="beliefs-disposition-ranking-item">
+                            <div class="disposition-ranking-item-title ranking-item-title-happy">快乐</div>
+                            <div class="disposition-ranking-item-des">善于发现生活中的积极面，能够通过愉悦和乐观感染孩子，营造轻松愉快的家庭氛围。</div>
+                        </div>
+                        <div class="beliefs-disposition-ranking-item">
+                            <div class="disposition-ranking-item-title ranking-item-title-sad">悲伤</div>
+                            <div class="disposition-ranking-item-des">对情绪波动敏感，能够理解孩子在挫折或失落中的感受，提供情感上的支持和安慰。
+                            </div>
+                        </div>
+                        <div class="beliefs-disposition-ranking-item">
+                            <div class="disposition-ranking-item-title ranking-item-title-advance">期待</div>
+                            <div class="disposition-ranking-item-des">对未来充满积极展望，善于通过鼓励和期待激发孩子的成长动力，让孩子在目标驱动中感受到支持和希望。
+                            </div>
+                        </div>
+                        <div class="beliefs-disposition-ranking-item">
+                            <div class="disposition-ranking-item-title ranking-item-title-hate">厌恶</div>
+                            <div class="disposition-ranking-item-des">对不适宜的事物有明确的界限感，能够在家庭中帮助孩子判断什么是“不可接受”的，并教会他们如何保护自己。
+                            </div>
+                        </div>
+                        <div class="beliefs-disposition-ranking-item">
+                            <div class="disposition-ranking-item-title ranking-item-title-surprise">惊讶</div>
+                            <div class="disposition-ranking-item-des">对新奇事物敏感，能够迅速调整应对策略，这种特质让您更擅长引导孩子应对突发情况或适应环境变化。
+                            </div>
+                        </div>
+                        <div class="beliefs-disposition-ranking-item">
+                            <div class="disposition-ranking-item-title ranking-item-title-trust">信任</div>
+                            <div class="disposition-ranking-item-des">情绪表现传递出安全感和可靠性，能够在亲子关系中构建牢固的信任基础，为孩子带来持续的安全感。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- emotion 部分 -->
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container interaction-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title emotion-title">EMOTION</div>
+                </div>
+                <div class="beliefs-content interaction-content">
+                    <div class="beliefs-content-title emotion-content-title">情绪模式</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title ">
+                                <div class="beliefs-content-part-title-text">情绪模式关键词: <span class="title-key"
+                                        style="font-weight: bold; margin-left: 5px;color: #494397;">敏锐</span></div>
+                            </div>
+                            <div class="beliefs-content-part-list">
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">在养育情境中，您大多数时候可以敏锐地觉察情绪信号，敏感捕捉情绪变化，倾向于关注情绪细节，并且擅长感知隐含的情绪。
+                                    </div>
+                                </div>
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">很有可能，在养育情境中，您更倾向于通过行为或间接方式传递情绪信息，对情绪的表达偏向隐晦。</div>
+                                </div>
+                                <div class="beliefs-content-part-item">
+                                    <div class="part-item-text">您在情绪模式方面的特质，能够帮助您迅速感知孩子的情绪需求并调整应对方式，同时您能够在高压力情境中保持克制。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="beliefs-content-part-title" style="margin-top: 30px;">
+                                <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥&nbsp;<span
+                                        class="interaction-title-tip-key">“包容”</span>&nbsp;特质的潜能</div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <ul>
+                                <li>识别并优先回应孩子行为中最重要的情绪信号。</li>
+                                <li>善用文字（比如写信、留言条等）和行动支持孩子，增强情感联结。</li>
+                                <li>确保拥有稳定、可靠的减压方式，在您需要时可以及时提供支持。</li>
+                                <li>练习完善您用来描述自己感受的措辞。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-tip interaction-title-tip-blind">留意盲点</div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-action">
+                            <ul>
+                                <li>可能因为过度关注细节而忽视整体情境，也更容易感到情绪负担。</li>
+                                <li>可能因为缺少直接表达，导致对方不能准确或快速理解您的情感需求。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- personality 部分 -->
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container personality-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title personality-title">PERSONALITY</div>
+                </div>
+                <div class="beliefs-content personality-content">
+                    <div class="beliefs-content-title personality-content-title">个性特质</div>
+                    <div class="beliefs-content-subtitle">反映个体在特性环境下的气质特征与个性化倾向。</div>
+                    <div class="beliefs-content-subtitle">测评从<strong>活动水平、思维倾向和互动倾向</strong>三个方面进行描述。</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-result">
+                            <div class="ranking-item-title-result">CRI</div>
+                            <div class="personality-perference">
+                                <div class="personality-perference-title">您的性格偏好</div>
+                                <div class="personality-perference-keyword">
+                                    <span class="perferenc-keyword-item">安静</span>
+                                    <span class="perferenc-keyword-item">理性</span>
+                                    <span class="perferenc-keyword-item">内向</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-personality-list">
+                            <div class="border-des">
+                                <div class="beliefs-content-personality-item">
+                                    <div>
+                                        <div class="personality-item-title">活跃</div>
+                                        <div class="personality-item-des">您倾向于更高频率和能量投入的方式与孩子互动。</div>
+                                    </div>
+                                    <div class="personality-item-head">
+                                        A
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-des">
+                                <div class="beliefs-content-personality-item personality-item-opposite">
+                                    <div class="personality-item-head">
+                                        C
+                                    </div>
+                                    <div>
+                                        <div class="personality-item-title personality-item-title-opposite">安静</div>
+                                        <div class="personality-item-des personality-item-des-opposite">
+                                            您倾向于安静、平和的方式与孩子互动。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-des">
+                                <div class="beliefs-content-personality-item">
+                                    <div>
+                                        <div class="personality-item-title">感性</div>
+                                        <div class="personality-item-des">您注重情感和关系，倾向于借助情感和价值观来处理信息。</div>
+                                    </div>
+                                    <div class="personality-item-head">
+                                        F
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-des">
+                                <div class="beliefs-content-personality-item personality-item-opposite">
+                                    <div class="personality-item-head">
+                                        R
+                                    </div>
+                                    <div>
+                                        <div class="personality-item-title personality-item-title-opposite">理性</div>
+                                        <div class="personality-item-des personality-item-des-opposite">
+                                            您注重逻辑，关注事实，倾向于通过客观分析来决策。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-des">
+                                <div class="beliefs-content-personality-item">
+                                    <div>
+                                        <div class="personality-item-title">外向</div>
+                                        <div class="personality-item-des">您倾向于关注外部世界，通过与人交流、做事来获得能量。</div>
+                                    </div>
+                                    <div class="personality-item-head">
+                                        E
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-des">
+                                <div class="beliefs-content-personality-item personality-item-opposite">
+                                    <div class="personality-item-head">
+                                        I
+                                    </div>
+                                    <div>
+                                        <div class="personality-item-title personality-item-title-opposite">内向</div>
+                                        <div class="personality-item-des personality-item-des-opposite">
+                                            您倾向于关注内心世界，通过内省来获得能量。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="beliefs-content-personality-action">
+                            <div class="beliefs-content-part-item personality-item-action">
+                                <div class="part-item-text">
+                                    总的来说，您偏好安静、慢节奏的生活方式，注重理性分析和逻辑思考，倾向于独立解决问题。您在养育中表现得冷静、有条理，但可能较少主动与孩子进行情感互动，更多通过内在思考来指导行为。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container personality-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title personality-title">PERSONALITY</div>
+                </div>
+                <div class="beliefs-content personality-content">
+                    <div class="beliefs-content-title personality-content-title">个性特质</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">1</div>
+                                <div class="beliefs-content-part-title-text" style="color: #494397; font-weight: 700;">
+                                    活动水平
+                                </div>
+                            </div>
+                            <div class="personality-content-part-subtitle">
+                                <strong>活动水平，</strong>描述您在精力、行为节奏和身体活动倾向方面的稳定特质。反映家长在养育中与孩子的活动强度、陪伴方式以及对生活节奏的安排。
+                            </div>
+                            <div class="personality-test">
+                                <div class="personality-test-bar" id="personality-test-bar">
+                                    <div class="arrow-contianer" style="left: 30%;"></div>
+                                    <img src="https://assets.jiker.com/_for_common_project/2025/0113/admin/iO5B5UzjGfQRQuP3U2i5U2liU1DZVO2tOB3OK7Kx.png"
+                                        alt="">
+                                </div>
+                                <div class="personality-test-des">
+                                    <div class="personality-test-des-item">
+                                        <div class="personality-test-des-title">
+                                            安静，慢节奏
+                                        </div>
+                                        <div class="personality-test-des-content">(倾向于耐心陪伴，为孩子营造安定、专注的互动氛围)</div>
+                                    </div>
+                                    <div class="personality-test-des-item">
+                                        <div class="personality-test-des-title">
+                                            活跃，快节奏
+                                        </div>
+                                        <div class="personality-test-des-content">(倾向于通过高频互动，激发孩子的能量和参与感)</div>
+                                    </div>
+                                </div>
+                                <div class="beliefs-content-personality-action">
+                                    <div class="beliefs-content-part-item personality-item-action">
+                                        <div class="part-item-text">您可能更喜欢平和的环境和稳定的节奏来与孩子互动。</div>
+                                        <div class="part-item-text">
+                                            在孩子需要倾听、情感支持或静心学习时，您能够提供非常有效的陪伴。同时，您的耐心和专注可以引导孩子细致地观察和思考。
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="beliefs-content-part-title" style="margin-top: 30px;">
+                                    <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥潜能</div>
+                                </div>
+                                <div class="beliefs-content-action">
+                                    <ul>
+                                        <li>与孩子共同参与一些需要专注的活动（如阅读、拼图等），深化联结。</li>
+                                        <li>在孩子表现出高能量需求时，适当调整自己的节奏（例如加入短暂的户外活动），以匹配孩子的精力状态。</li>
+                                        <li>定期与孩子交流他的兴趣和感受，确保自己的慢节奏不妨碍孩子的探索欲望。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container personality-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title personality-title">PERSONALITY</div>
+                </div>
+                <div class="beliefs-content personality-content">
+                    <div class="beliefs-content-title personality-content-title">个性特质</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">2</div>
+                                <div class="beliefs-content-part-title-text" style="color: #494397; font-weight: 700;">
+                                    思维倾向
+                                </div>
+                            </div>
+                            <div class="personality-content-part-subtitle">
+                                <strong>思维倾向，</strong>描述您在养育情境中，信息获取、处理和决策方式上的偏好。它是帮助家长选择教育方式、沟通风格的关键特质。
+                            </div>
+                            <div class="personality-test">
+                                <div class="personality-test-bar" id="personality-test-bar">
+                                    <div class="arrow-contianer" style="left: 30%;"></div>
+                                    <img src="https://assets.jiker.com/_for_common_project/2025/0113/admin/iO5B5UzjGfQRQuP3U2i5U2liU1DZVO2tOB3OK7Kx.png"
+                                        alt="">
+                                </div>
+                                <div class="personality-test-des">
+                                    <div class="personality-test-des-item">
+                                        <div class="personality-test-des-title">
+                                            理性主导
+                                        </div>
+                                        <div class="personality-test-des-content">(注重逻辑和事实，倾向于以目标为导向引导孩子)</div>
+                                    </div>
+                                    <div class="personality-test-des-item">
+                                        <div class="personality-test-des-title">
+                                            感性主导
+                                        </div>
+                                        <div class="personality-test-des-content">(注重情感和关系，倾向于通过共情和理解支持孩子)</div>
+                                    </div>
+                                </div>
+                                <div class="beliefs-content-personality-action">
+                                    <div class="beliefs-content-part-item personality-item-action">
+                                        <div class="part-item-text">您在养育中更倾向于通过逻辑、分析和目标设定来引导孩子成长。</div>
+                                        <div class="part-item-text">您很可能擅长为孩子提供清晰的方向感和结构化的支持，并且您也能在需要时关注孩子的情感需求。</div>
+                                    </div>
+                                </div>
+                                <div class="beliefs-content-part-title" style="margin-top: 30px;">
+                                    <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥潜能</div>
+                                </div>
+                                <div class="beliefs-content-action">
+                                    <ul>
+                                        <li>利用您的逻辑和分析能力，帮助孩子学会拆解任务并找到解决路径。</li>
+                                        <li>运用您的理性特质，帮助孩子在面对复杂问题时，学会以冷静、清晰的方式处理挑战。</li>
+                                        <li>尝试在计划制定过程中多倾听孩子的情感需求，将逻辑分析与感性关怀结合起来，增强孩子对目标的认同感。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a4-page" style="flex-direction: column;">
+            <div class="beliefs-container personality-container">
+                <div style="display: flex; justify-content: flex-end; margin-top: 70px;">
+                    <div class="beliefs-title personality-title">PERSONALITY</div>
+                </div>
+                <div class="beliefs-content personality-content">
+                    <div class="beliefs-content-title personality-content-title">个性特质</div>
+                    <div class="beliefs-content-des">
+                        <div class="beliefs-content-part">
+                            <div class="beliefs-content-part-title">
+                                <div class="beliefs-content-part-title-num">3</div>
+                                <div class="beliefs-content-part-title-text" style="color: #494397; font-weight: 700;">
+                                    互动倾向
+                                </div>
+                            </div>
+                            <div class="personality-content-part-subtitle">
+                                <strong>互动倾向，</strong>描述您在能量获取和互动模式的稳定特质。它直接影响您与孩子互动的频率、形式以及亲子沟通风格。
+                            </div>
+                            <div class="personality-test">
+                                <div class="personality-test-bar" id="personality-test-bar">
+                                    <div class="arrow-contianer" style="left: 30%;"></div>
+                                    <img src="https://assets.jiker.com/_for_common_project/2025/0113/admin/iO5B5UzjGfQRQuP3U2i5U2liU1DZVO2tOB3OK7Kx.png"
+                                        alt="">
+                                </div>
+                                <div class="personality-test-des">
+                                    <div class="personality-test-des-item">
+                                        <div class="personality-test-des-title">
+                                            内向主导
+                                        </div>
+                                        <div class="personality-test-des-content">(倾向于自我反思获取能量，偏向安静、深度互动)</div>
+                                    </div>
+                                    <div class="personality-test-des-item">
+                                        <div class="personality-test-des-title">
+                                            外向主导
+                                        </div>
+                                        <div class="personality-test-des-content">(倾向于通过外部互动获取能量和拉近亲子关系)</div>
+                                    </div>
+                                </div>
+                                <div class="beliefs-content-personality-action">
+                                    <div class="beliefs-content-part-item personality-item-action">
+                                        <div class="part-item-text">您在养育中更倾向于与孩子建立细腻的亲子联结，相比于更高频率的互动，您更注重高质量的陪伴时间。</div>
+                                        <div class="part-item-text">您很可能擅长在与孩子的深度交流中，帮助孩子感受到被关注和理解。</div>
+                                    </div>
+                                </div>
+                                <div class="beliefs-content-part-title" style="margin-top: 30px;">
+                                    <div class="beliefs-content-part-title-tip">在养育情境中，充分发挥潜能</div>
+                                </div>
+                                <div class="beliefs-content-action">
+                                    <ul>
+                                        <li>利用亲密、安静的场景（如睡前谈心、一起阅读）与孩子交流。</li>
+                                        <li>观察与思考是您的特质优势。尝试留意孩子的兴趣、情绪和行为细节，主动设计贴合孩子需求的亲子活动。</li>
+                                        <li>尝试在互动中多提问，鼓励孩子表达自己的情绪和想法，帮助孩子体会和逐渐适应更开放的互动情境。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+</body>
+
+
+</html>
