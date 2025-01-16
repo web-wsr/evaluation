@@ -812,8 +812,10 @@
     }
 
     .personality-item-opposite {
-        border-right: none;
         border-left: 1px solid #BDCED8;
+        height: 90px;
+        display: flex;
+        align-items: center;
     }
 
     .personality-item-opposite .personality-item-head::after {
@@ -827,8 +829,8 @@
     }
 
     .personality-item-title-opposite {
+        font-size: 20px;
         text-align: left;
-        color: #494397;
     }
 
     .personality-item-des {
@@ -845,6 +847,11 @@
         word-wrap: break-word;
         overflow-wrap: break-word;
         padding-left: 0;
+        font-size: 20px;
+    }
+
+    /* active */
+    .active {
         color: #494397;
     }
 
@@ -1872,15 +1879,14 @@
                                 </div>
                             </div>
                             <div class="border-des">
-                                <div class="beliefs-content-personality-item personality-item-opposite">
+                                <div class="personality-item-opposite">
                                     <div class="personality-item-head">
                                         C
                                     </div>
-                                    <div>
-                                        <div class="personality-item-title personality-item-title-opposite">安静</div>
-                                        <div class="personality-item-des personality-item-des-opposite">
-                                            您倾向于安静、平和的方式与孩子互动。
-                                        </div>
+                                    <div class="active">
+                                        <div class="personality-item-title-opposite">安静</div>
+                                        <div class="personality-item-des-opposite">
+                                            您倾向于安静、平和的方式与孩子互动。</div>
                                     </div>
                                 </div>
                             </div>
@@ -1896,13 +1902,13 @@
                                 </div>
                             </div>
                             <div class="border-des">
-                                <div class="beliefs-content-personality-item personality-item-opposite">
+                                <div class="personality-item-opposite">
                                     <div class="personality-item-head">
                                         R
                                     </div>
-                                    <div>
-                                        <div class="personality-item-title personality-item-title-opposite">理性</div>
-                                        <div class="personality-item-des personality-item-des-opposite">
+                                    <div class="active">
+                                        <div class="personality-item-title-opposite">理性</div>
+                                        <div class="personality-item-des-opposite">
                                             您注重逻辑，关注事实，倾向于通过客观分析来决策。
                                         </div>
                                     </div>
@@ -1920,13 +1926,13 @@
                                 </div>
                             </div>
                             <div class="border-des">
-                                <div class="beliefs-content-personality-item personality-item-opposite">
+                                <div class="personality-item-opposite">
                                     <div class="personality-item-head">
                                         I
                                     </div>
-                                    <div>
-                                        <div class="personality-item-title personality-item-title-opposite">内向</div>
-                                        <div class="personality-item-des personality-item-des-opposite">
+                                    <div class="active">
+                                        <div class="personality-item-title-opposite">内向</div>
+                                        <div class="personality-item-des-opposite">
                                             您倾向于关注内心世界，通过内省来获得能量。
                                         </div>
                                     </div>
